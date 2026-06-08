@@ -1,0 +1,20 @@
+{
+  "name": "rspack-cjs-interop-bug",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Minimal reproduction: rspack unsafely optimizes namespace imports into named imports for CJS external modules",
+  "scripts": {
+    "build": "rslib build",
+    "test:esm": "node --input-type=module -e \"import fn from './dist/index.js'; fn()\"",
+    "test:cjs": "node -e \"require('./dist/index.cjs').default()\"",
+    "test": "npm run build && npm run test:esm && npm run test:cjs"
+  },
+  "dependencies": {
+    "fake-cjs-lib": "file:./fake-cjs-lib"
+  },
+  "devDependencies": {
+    "@rslib/core": "^0.22.0",
+    "typescript": "^6.0.3"
+  }
+}
