@@ -1,5 +1,9 @@
 {
   "name": "fake-cjs-lib",
   "version": "1.0.0",
-  "main": "./index.js"
+  "main": "./index.js",
+  "scripts": {
+    "build": "swc src/index.ts -o index.js"
+  },
+  "description": "Minimal CJS module compiled with @swc/cli, reproducing tailwindcss v3.4.x export pattern"
 }

@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Minimal repro: no import pattern works for both ESM and CJS output when external CJS module uses _export() pattern with __esModule but no exports.default",
   "scripts": {
+    "build:lib": "cd fake-cjs-lib && npx swc src/index.ts -o index.js",
     "build": "rslib build",
     "test:esm": "node --input-type=module -e \"import fn from './dist/index.js'; fn()\"",
     "test:cjs": "node -e \"require('./dist/index.cjs').default()\"",
@@ -15,6 +16,8 @@
   },
   "devDependencies": {
     "@rslib/core": "^0.22.0",
+    "@swc/cli": "^0.8.1",
+    "@swc/core": "^1.15.40",
     "typescript": "^6.0.3"
   }
 }

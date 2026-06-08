@@ -64,24 +64,41 @@ pnpm test:cjs   # ❌ TypeError: Cannot read properties of undefined
 
 Edit `src/index.ts` and uncomment different patterns to verify each one.
 
-## The CJS module code (fake-cjs-lib/index.js)
+## The CJS module (fake-cjs-lib)
 
+`fake-cjs-lib/` is compiled from TypeScript using `@swc/cli`, exactly like tailwindcss v3.4.x:
+
+```bash
+# tailwindcss uses:  swc src --out-dir lib --copy-files
+# we use:
+pnpm build:lib   # or: cd fake-cjs-lib && npx swc src/index.ts -o index.js
+```
+
+**Source** (`fake-cjs-lib/src/index.ts`):
+```ts
+export const MY_SYMBOL: unique symbol = Symbol('my-symbol');
+export function helperFn(): string { return 'hello from CJS'; }
+```
+
+**Compiled output** (`fake-cjs-lib/index.js`) — identical pattern to `tailwindcss/lib/**/*.js`:
 ```js
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 function _export(target, all) {
     for(var name in all) Object.defineProperty(target, name, {
         enumerable: true,
-        get: all[name]
+        get: Object.getOwnPropertyDescriptor(all, name).get
     });
 }
 _export(exports, {
-    MY_SYMBOL: function() { return MY_SYMBOL; },
-    helperFn: function() { return helperFn; }
+    get MY_SYMBOL() { return MY_SYMBOL; },
+    get helperFn() { return helperFn; }
 });
 const MY_SYMBOL = Symbol('my-symbol');
 function helperFn() { return 'hello from CJS'; }
 ```
+
+tailwindcss reference: `@swc/cli` 0.1.62, `@swc/core` 1.3.55, build command: `"build": "swc src --out-dir lib --copy-files"`
 
 ## Verifying cjs-module-lexer behavior in Node.js
 
