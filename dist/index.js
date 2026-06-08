@@ -1,6 +1,6 @@
-import * as __rspack_external_fake_cjs_lib_876278b5 from "fake-cjs-lib";
-const sym = __rspack_external_fake_cjs_lib_876278b5.MY_SYMBOL;
-const fn = __rspack_external_fake_cjs_lib_876278b5.helperFn;
+import { MY_SYMBOL, helperFn } from "fake-cjs-lib";
+const sym = MY_SYMBOL;
+const fn = helperFn;
 function main() {
     console.log('MY_SYMBOL type:', typeof sym);
     console.log('helperFn result:', fn());

@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Minimal reproduction: rspack unsafely optimizes namespace imports into named imports for CJS external modules",
+  "description": "Minimal repro: no import pattern works for both ESM and CJS output when external CJS module uses _export() pattern with __esModule but no exports.default",
   "scripts": {
     "build": "rslib build",
     "test:esm": "node --input-type=module -e \"import fn from './dist/index.js'; fn()\"",
     "test:cjs": "node -e \"require('./dist/index.cjs').default()\"",
-    "test": "npm run build && npm run test:esm && npm run test:cjs"
+    "test": "pnpm build && pnpm test:esm && pnpm test:cjs"
   },
   "dependencies": {
     "fake-cjs-lib": "file:./fake-cjs-lib"
